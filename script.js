@@ -2,7 +2,7 @@ const outputBox = document.getElementById("output");
 
 let buffer = "";
 
-/* ===== 字典（顯示 + 複製分離）===== */
+/* ===== 字典 ===== */
 const letters = {
   A: { base:"σ", tones:["σ̇","σ̲","σ'"] },
   B: { base:"ৎ", tones:["ৎ̇","ৎ̲","ৎ'"] },
@@ -52,7 +52,7 @@ function addSpace(){
 }
 
 function backspace(){
-  buffer = buffer.trimEnd().slice(0,-1);
+  buffer = buffer.trimEnd().slice(0, -1);
   render();
 }
 
@@ -67,6 +67,10 @@ function copyText(){
 
 /* ===== tone menu ===== */
 function showToneMenu(tones){
+
+  const old = document.getElementById("toneMenu");
+  if (old) old.remove();
+
   const menu = document.createElement("div");
   menu.id = "toneMenu";
 
@@ -86,15 +90,15 @@ function showToneMenu(tones){
   document.body.appendChild(menu);
 }
 
-/* ===== keyboard builder ===== */
+/* ===== keyboard ===== */
 function buildRow(id, keys){
   const container = document.getElementById(id);
 
   keys.forEach(k=>{
     const data = letters[k];
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "key";
+    const key = document.createElement("div");
+    key.className = "key";
 
     const base = document.createElement("div");
     base.className = "base";
@@ -102,27 +106,26 @@ function buildRow(id, keys){
 
     const underline = document.createElement("div");
     underline.className = "underline";
-    underline.innerText = "ˍ"; // CSS視覺線
+    underline.innerText = "ˍ";
 
-    wrapper.appendChild(base);
-    wrapper.appendChild(underline);
+    key.appendChild(base);
+    key.appendChild(underline);
 
-    /* tap */
-    wrapper.onclick = ()=> addChar(data.base);
+    key.onclick = ()=> addChar(data.base);
 
-    /* long press */
     let timer;
-    wrapper.addEventListener("touchstart", ()=>{
+
+    key.addEventListener("touchstart", ()=>{
       timer = setTimeout(()=>{
         showToneMenu(data.tones);
       }, 350);
     });
 
-    wrapper.addEventListener("touchend", ()=>{
+    key.addEventListener("touchend", ()=>{
       clearTimeout(timer);
     });
 
-    container.appendChild(wrapper);
+    container.appendChild(key);
   });
 }
 
