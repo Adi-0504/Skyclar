@@ -104,7 +104,7 @@ function buildRow(id, keys){
     /* 🔺 英文小字 */
     const top = document.createElement("div");
     top.className = "top";
-    top.innerText = k;
+    top.innerText = "TEST";
 
     /* 🔻 空語大字 */
     const base = document.createElement("div");
