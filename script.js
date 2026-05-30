@@ -1,38 +1,44 @@
 const outputBox = document.getElementById("output");
-
 let buffer = "";
 
-/* ===== 空語字典 ===== */
+/* ===== 字母表 ===== */
 const letters = {
-  A: { base:"σ", tones:["σ̇","σ̲","σ'"] },
-  B: { base:"ৎ", tones:["ৎ̇","ৎ̲","ৎ'"] },
-  C: { base:"১", tones:["১̇","১̲","১'"] },
-  D: { base:"ঢ", tones:["ঢ̇","ঢ̲","ঢ'"] },
-  E: { base:"ε", tones:["ε̇","ε̲","ε'"] },
-  F: { base:"न", tones:["न̇","न̲","न'"] },
-  G: { base:"३", tones:["३̇","३̲","३'"] },
+  A:{base:"σ",tones:["σ̇","σ̲","σ'"]},
+  B:{base:"ৎ",tones:["ৎ̇","ৎ̲","ৎ'"]},
+  C:{base:"১",tones:["১̇","১̲","১'"]},
+  D:{base:"ঢ",tones:["ঢ̇","ঢ̲","ঢ'"]},
+  E:{base:"ε",tones:["ε̇","ε̲","ε'"]},
+  F:{base:"न",tones:["न̇","न̲","न'"]},
+  G:{base:"३",tones:["३̇","३̲","३'"]},
 
-  H: { base:"μ", tones:["μ̇","μ̲","μ'"] },
-  I: { base:"ι", tones:["ι̇","ι̲","ι'"] },
-  J: { base:"৮", tones:["৮̇","৮̲","৮'"] },
-  K: { base:"ও", tones:["ও̇","ও̲","ও'"] },
-  L: { base:"হ", tones:["হ̇","হ̲","হ'"] },
-  M: { base:"৩", tones:["৩̇","৩̲","৩'"] },
+  H:{base:"μ",tones:["μ̇","μ̲","μ'"]},
+  I:{base:"ι",tones:["ι̇","ι̲","ι'"]},
+  J:{base:"৮",tones:["৮̇","৮̲","৮'"]},
+  K:{base:"ও",tones:["ও̇","ও̲","ও'"]},
+  L:{base:"হ",tones:["হ̇","হ̲","হ'"]},
+  M:{base:"৩",tones:["৩̇","৩̲","৩'"]},
 
-  N: { base:"η", tones:["η̇","η̲","η'"] },
-  O: { base:"प", tones:["प̇","प̲","प'"] },
-  P: { base:"ड", tones:["ड̇","ड̲","ड'"] },
-  Q: { base:"व", tones:["व̇","व̲","व'"] },
-  R: { base:"ς", tones:["ς̇","ς̲","ς'"] },
-  S: { base:"ग", tones:["ग̇","ग̲","ग'"] },
+  N:{base:"η",tones:["η̇","η̲","η'"]},
+  O:{base:"प",tones:["प̇","प̲","प'"]},
+  P:{base:"ड",tones:["ड̇","ड̲","ड'"]},
+  Q:{base:"व",tones:["व̇","व̲","व'"]},
+  R:{base:"ς",tones:["ς̇","ς̲","ς'"]},
+  S:{base:"ग",tones:["ग̇","ग̲","ग'"]},
 
-  T: { base:"τ", tones:["τ̇","τ̲","τ'"] },
-  U: { base:"ढ", tones:["ढ̇","ढ̲","ढ'"] },
-  V: { base:"न", tones:["न̇","न̲","न'"] },
-  W: { base:"λ", tones:["λ̇","λ̲","λ'"] },
-  X: { base:"δ", tones:["δ̇","δ̲","δ'"] },
-  Y: { base:"য", tones:["য̇","য̲","য'"] },
-  Z: { base:"ζ", tones:["ζ̇","ζ̲","ζ'"] }
+  T:{base:"τ",tones:["τ̇","τ̲","τ'"]},
+  U:{base:"ढ",tones:["ढ̇","ढ̲","ढ'"]},
+  V:{base:"न",tones:["न̇","न̲","न'"]},
+  W:{base:"λ",tones:["λ̇","λ̲","λ'"]},
+  X:{base:"δ",tones:["δ̇","δ̲","δ'"]},
+  Y:{base:"য",tones:["য̇","য̲","য'"]},
+  Z:{base:"ζ",tones:["ζ̇","ζ̲","ζ'"]}
+};
+
+/* ===== special cluster system ===== */
+/* KO + ो = 黏著音節 */
+const clusters = {
+  "KO":"ट",
+  "KO+O":"टो"
 };
 
 /* ===== render ===== */
@@ -52,7 +58,7 @@ function addSpace(){
 }
 
 function backspace(){
-  buffer = buffer.trimEnd().slice(0,-1);
+  buffer = buffer.slice(0,-1);
   render();
 }
 
@@ -90,7 +96,7 @@ function showToneMenu(tones){
   document.body.appendChild(menu);
 }
 
-/* ===== keyboard builder ===== */
+/* ===== keyboard ===== */
 function buildRow(id, keys){
   const container = document.getElementById(id);
   container.innerHTML = "";
@@ -101,17 +107,14 @@ function buildRow(id, keys){
     const key = document.createElement("div");
     key.className = "key";
 
-    /* 🔺 英文小字 */
     const top = document.createElement("div");
     top.className = "top";
-    top.innerText = "TEST";
+    top.innerText = k;
 
-    /* 🔻 空語大字 */
     const base = document.createElement("div");
     base.className = "base";
     base.innerText = data.base;
 
-    /* underline */
     const underline = document.createElement("div");
     underline.className = "underline";
     underline.innerText = "ˍ";
@@ -120,26 +123,63 @@ function buildRow(id, keys){
     key.appendChild(base);
     key.appendChild(underline);
 
-    /* tap */
-    key.onclick = () => addChar(data.base);
+    key.onclick = ()=> addChar(data.base);
 
-    /* long press */
+    /* long press tone */
     let timer;
     key.addEventListener("touchstart", ()=>{
-      timer = setTimeout(()=>{
-        showToneMenu(data.tones);
-      }, 350);
+      timer = setTimeout(()=> showToneMenu(data.tones), 350);
     });
 
-    key.addEventListener("touchend", ()=>{
-      clearTimeout(timer);
-    });
+    key.addEventListener("touchend", ()=> clearTimeout(timer));
 
     container.appendChild(key);
   });
+}
+
+/* ===== special KO key ===== */
+function buildSpecial(){
+  const row4 = document.getElementById("row4");
+
+  const ko = document.createElement("div");
+  ko.className = "key";
+
+  const top = document.createElement("div");
+  top.className = "top";
+  top.innerText = "KO";
+
+  const base = document.createElement("div");
+  base.className = "base";
+  base.innerText = "ट";
+
+  ko.appendChild(top);
+  ko.appendChild(base);
+
+  ko.onclick = ()=> addChar("ट");
+
+  row4.appendChild(ko);
+
+  const small = document.createElement("div");
+  small.className = "key";
+
+  const top2 = document.createElement("div");
+  top2.className = "top";
+  top2.innerText = "O";
+
+  const base2 = document.createElement("div");
+  base2.className = "base";
+  base2.innerText = "ो";
+
+  small.appendChild(top2);
+  small.appendChild(base2);
+
+  small.onclick = ()=> addChar("ो");
+
+  row4.appendChild(small);
 }
 
 /* ===== init ===== */
 buildRow("row1", ["A","B","C","D","E","F","G","H","I","J"]);
 buildRow("row2", ["K","L","M","N","O","P","Q","R"]);
 buildRow("row3", ["S","T","U","V","W","X","Y","Z"]);
+buildSpecial();
