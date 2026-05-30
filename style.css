@@ -67,13 +67,14 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 
   user-select: none;
+  touch-action: manipulation;
 }
 
 .key:active {
   transform: scale(0.95);
 }
 
-/* small english */
+/* 英文小字 */
 .top {
   position: absolute;
   top: 6px;
@@ -83,12 +84,12 @@ body {
   color: rgba(0,0,0,0.45);
 }
 
-/* main glyph */
+/* 主字 */
 .base {
   font-size: 26px;
 }
 
-/* tone underline */
+/* underline */
 .underline {
   position: absolute;
   bottom: 6px;
@@ -102,10 +103,13 @@ body {
   left: 50%;
   bottom: 120px;
   transform: translateX(-50%);
+
   display: flex;
   gap: 8px;
+
   background: white;
   padding: 10px;
   border-radius: 14px;
+
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
