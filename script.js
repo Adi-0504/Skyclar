@@ -1,68 +1,39 @@
 const output = document.getElementById("output");
 
-/* SKY LETTER MAP */
+/* 空語字母 */
 const letters = {
-  A: "σ", B: "ৎ", C: "১", D: "ঢ", E: "ε", F: "न", G: "३",
-  H: "μ", I: "ι", J: "৮", K: "ও", L: "হ", M: "৩",
-  N: "η", O: "प", P: "ड", Q: "व", R: "ς", S: "গ",
-  T: "τ", U: "ढ", V: "न", W: "λ", X: "δ", Y: "য", Z: "ζ"
+  A: "σ", B: "ৎ", C: "১", D: "ঢ", E: "ε",
+  F: "न", G: "३", H: "μ", I: "ι", J: "৮",
+  K: "ও", L: "হ", M: "η", N: "प", O: "ड",
+  P: "व", Q: "ς", R: "τ", S: "ग", T: "λ",
+  U: "δ", V: "ζ", W: "ι", X: "ξ", Y: "ψ",
+  Z: "χ"
 };
 
-/* WORDS */
-const words = ["wuso", "kanu", "paz", "kupaz", "kula", "wula"];
+/* 你的新 ABC 排列 */
+const row1 = ["A","B","C","D","E","F","G","H","I","J"];
+const row2 = ["K","L","M","N","O","P","Q","R"];
+const row3 = ["U","V","W","X","Y","Z"];
 
-/* TONES */
-const tones = ["̇", "̲", "˩"];
+function buildRow(id, keys) {
+  const container = document.getElementById(id);
 
-/* BUILD ABC GRID */
-const lettersDiv = document.getElementById("letters");
+  keys.forEach(k => {
+    const btn = document.createElement("button");
 
-Object.keys(letters).forEach(key => {
-  const btn = document.createElement("button");
+    btn.innerHTML = `
+      <div class="top">${k}</div>
+      <div class="bottom">${letters[k]}</div>
+    `;
 
-  btn.innerHTML =
-    `<div style="font-size:12px;">${key}</div>
-     <div style="font-size:20px;">${letters[key]}</div>`;
+    btn.onclick = () => {
+      output.innerText += letters[k] + " ";
+    };
 
-  btn.onclick = () => append(letters[key]);
-
-  lettersDiv.appendChild(btn);
-});
-
-/* WORDS */
-const wordsDiv = document.getElementById("words");
-
-words.forEach(w => {
-  const btn = document.createElement("button");
-  btn.innerText = w;
-  btn.onclick = () => append(w + " ");
-  wordsDiv.appendChild(btn);
-});
-
-/* TONES */
-const tonesDiv = document.getElementById("tones");
-
-tones.forEach(t => {
-  const btn = document.createElement("button");
-  btn.innerText = t;
-  btn.onclick = () => appendTone(t);
-  tonesDiv.appendChild(btn);
-});
-
-/* FUNCTIONS */
-function append(text) {
-  output.innerText += text + " ";
+    container.appendChild(btn);
+  });
 }
 
-function appendTone(tone) {
-  output.innerText = output.innerText.trim();
-  output.innerText += tone + " ";
-}
-
-function clearText() {
-  output.innerText = "";
-}
-
-function backspace() {
-  output.innerText = output.innerText.trim().slice(0, -1);
-}
+buildRow("row1", row1);
+buildRow("row2", row2);
+buildRow("row3", row3);
