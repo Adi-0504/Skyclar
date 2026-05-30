@@ -1,63 +1,54 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial;
-  background: #f2f2f7;
+  font-family: -apple-system;
+  background: #d1d1d6;
 }
 
-.app {
-  max-width: 900px;
-  margin: auto;
-  padding: 12px;
-}
-
-/* OUTPUT */
 .output {
+  margin: 10px;
+  padding: 12px;
   background: white;
-  min-height: 70px;
-  padding: 14px;
-  border-radius: 14px;
-  font-size: 20px;
-  margin-bottom: 12px;
+  border-radius: 12px;
+  min-height: 60px;
 }
 
-/* KEYBOARD GRID (ABC STYLE) */
+/* KEYBOARD */
 .keyboard {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-/* WORD BAR */
-.wordbar, .tonebar {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
-  margin-bottom: 10px;
-}
-
-/* BUTTON STYLE (iOS-like) */
-button {
-  background: white;
-  border: none;
-  border-radius: 10px;
   padding: 10px;
-  font-size: 14px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* ACTIVE PRESS */
-button:active {
-  transform: scale(0.97);
-}
-
-/* ACTION BAR */
-.actions {
+/* iOS stagger */
+.row {
   display: flex;
-  gap: 10px;
+  gap: 6px;
 }
 
-.actions button {
+.row:nth-child(2) {
+  margin-left: 18px;
+}
+
+.row:nth-child(3) {
+  margin-left: 36px;
+}
+
+/* KEY */
+button {
   flex: 1;
-  font-weight: bold;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  background: white;
+}
+
+/* LABELS */
+.top {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.bottom {
+  font-size: 18px;
 }
