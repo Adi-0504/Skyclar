@@ -34,13 +34,6 @@ const letters = {
   Z:{base:"ζ",tones:["ζ̇","ζ̲","ζ'"]}
 };
 
-/* ===== special cluster system ===== */
-/* KO + ो = 黏著音節 */
-const clusters = {
-  "KO":"ट",
-  "KO+O":"टो"
-};
-
 /* ===== render ===== */
 function render(){
   outputBox.innerText = buffer;
@@ -96,9 +89,12 @@ function showToneMenu(tones){
   document.body.appendChild(menu);
 }
 
-/* ===== keyboard ===== */
+/* ===== keyboard builder ===== */
 function buildRow(id, keys){
   const container = document.getElementById(id);
+
+  if (!container) return; // ⭐防炸
+
   container.innerHTML = "";
 
   keys.forEach(k=>{
@@ -125,7 +121,6 @@ function buildRow(id, keys){
 
     key.onclick = ()=> addChar(data.base);
 
-    /* long press tone */
     let timer;
     key.addEventListener("touchstart", ()=>{
       timer = setTimeout(()=> showToneMenu(data.tones), 350);
@@ -137,9 +132,10 @@ function buildRow(id, keys){
   });
 }
 
-/* ===== special KO key ===== */
+/* ===== KO special key（安全版）===== */
 function buildSpecial(){
   const row4 = document.getElementById("row4");
+  if (!row4) return; // ⭐最重要：不讓它炸
 
   const ko = document.createElement("div");
   ko.className = "key";
@@ -159,8 +155,8 @@ function buildSpecial(){
 
   row4.appendChild(ko);
 
-  const small = document.createElement("div");
-  small.className = "key";
+  const o = document.createElement("div");
+  o.className = "key";
 
   const top2 = document.createElement("div");
   top2.className = "top";
@@ -170,12 +166,12 @@ function buildSpecial(){
   base2.className = "base";
   base2.innerText = "ो";
 
-  small.appendChild(top2);
-  small.appendChild(base2);
+  o.appendChild(top2);
+  o.appendChild(base2);
 
-  small.onclick = ()=> addChar("ो");
+  o.onclick = ()=> addChar("ो");
 
-  row4.appendChild(small);
+  row4.appendChild(o);
 }
 
 /* ===== init ===== */
