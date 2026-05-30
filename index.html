@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sky Island Keyboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- OUTPUT -->
+    <div class="output" id="output"></div>
+
+    <!-- LETTERS -->
+    <div class="section">
+      <h3>Letters</h3>
+      <div class="grid" id="letters"></div>
+    </div>
+
+    <!-- WORDS -->
+    <div class="section">
+      <h3>Words</h3>
+      <div class="row" id="words"></div>
+    </div>
+
+    <!-- TONES -->
+    <div class="section">
+      <h3>Tones</h3>
+      <div class="row" id="tones"></div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button onclick="clearText()">⌫ Clear</button>
+      <button onclick="backspace()">← Delete</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
