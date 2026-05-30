@@ -1,63 +1,63 @@
-const output = document.getElementById("output");
-
-/* LETTERS */
-const letters = {
-  A: "σ", B: "ৎ", C: "১", D: "ঢ", E: "ε", F: "न", G: "३",
-  H: "μ", I: "ι", J: "৮", K: "ও", L: "হ", M: "৩",
-  N: "η", O: "प", P: "ड", Q: "व", R: "ς", S: "গ",
-  T: "τ", U: "ढ", V: "न", W: "λ", X: "δ", Y: "য", Z: "ζ"
-};
-
-/* WORDS */
-const words = ["wuso", "kanu", "paz", "kupaz", "kula", "wula"];
-
-/* TONES */
-const tones = ["̇", "̲", "˩"];
-
-/* BUILD LETTER BUTTONS */
-const lettersDiv = document.getElementById("letters");
-
-Object.entries(letters).forEach(([key, val]) => {
-  const btn = document.createElement("button");
-  btn.innerHTML = key + "<br>" + val;
-  btn.onclick = () => append(val);
-  lettersDiv.appendChild(btn);
-});
-
-/* WORD BUTTONS */
-const wordsDiv = document.getElementById("words");
-
-words.forEach(w => {
-  const btn = document.createElement("button");
-  btn.innerText = w;
-  btn.onclick = () => append(w + " ");
-  wordsDiv.appendChild(btn);
-});
-
-/* TONE BUTTONS */
-const tonesDiv = document.getElementById("tones");
-
-tones.forEach(t => {
-  const btn = document.createElement("button");
-  btn.innerText = t;
-  btn.onclick = () => appendTone(t);
-  tonesDiv.appendChild(btn);
-});
-
-/* FUNCTIONS */
-function append(text) {
-  output.innerText += text + " ";
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial;
+  background: #f2f2f7;
 }
 
-function appendTone(tone) {
-  output.innerText = output.innerText.trim();
-  output.innerText += tone + " ";
+.app {
+  max-width: 900px;
+  margin: auto;
+  padding: 12px;
 }
 
-function clearText() {
-  output.innerText = "";
+/* OUTPUT */
+.output {
+  background: white;
+  min-height: 70px;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 20px;
+  margin-bottom: 12px;
 }
 
-function backspace() {
-  output.innerText = output.innerText.trim().slice(0, -1);
+/* KEYBOARD GRID (ABC STYLE) */
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+/* WORD BAR */
+.wordbar, .tonebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* BUTTON STYLE (iOS-like) */
+button {
+  background: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ACTIVE PRESS */
+button:active {
+  transform: scale(0.97);
+}
+
+/* ACTION BAR */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  flex: 1;
+  font-weight: bold;
 }
