@@ -1,8 +1,6 @@
 const outputBox = document.getElementById("output");
-const predictBox = document.getElementById("predict");
 
-let raw = [];   // 原始輸入
-let buffer = ""; // 顯示輸出
+let buffer = "";
 
 /* 空語字母 */
 const letters = {
@@ -12,83 +10,71 @@ const letters = {
   T:"λ",U:"δ",V:"ζ",W:"ι",X:"ξ",Y:"ψ",Z:"χ"
 };
 
+/* KO & χ */
 const special = {
-  KO: "टो"
+  KO: "टो",
+  CHI: "ो"
 };
 
-/* OVS reorder engine */
-function reorderOVS(words) {
-  if (words.length < 3) return words.join(" ");
+/* tone marks */
+const tones = ["", "̇", "̲", "'"];
 
-  let subject = words[0];
-  let verb = words[1];
-  let object = words.slice(2).join(" ");
-
-  return `${object} ${verb} ${subject}`;
-}
-
-/* input */
-function addChar(char, rawChar) {
-  raw.push(rawChar);
-  buffer += char;
-  render();
-  updatePredict(char);
-}
-
-/* KO */
-function addKO() {
-  raw.push("KO");
-  buffer += special.KO;
-  render();
-}
-
-/* SPACE → trigger grammar processing */
-function addSpace() {
-  raw.push("SPACE");
-
-  let words = buffer.trim().split(" ");
-  buffer = reorderOVS(words);
-
-  buffer += " ";
-  render();
-  predictBox.innerHTML = "";
-}
-
-/* BACKSPACE */
-function backspace() {
-  raw.pop();
-  buffer = buffer.trimEnd().slice(0, -1);
-  render();
-}
-
-/* CLEAR */
-function clearText() {
-  raw = [];
-  buffer = "";
-  render();
-  predictBox.innerHTML = "";
-}
-
-/* COPY */
-function copyText() {
-  navigator.clipboard.writeText(buffer);
-}
+/* keyboard */
+const row1 = ["A","B","C","D","E","F","G","H","I","J"];
+const row2 = ["K","L","M","N","O","P","Q","R"];
+const row3 = ["S","T","U","V","W","X","Y","Z"];
 
 /* render */
 function render() {
   outputBox.innerText = buffer;
 }
 
-/* predictive */
-function updatePredict(char) {
-  predictBox.innerHTML = "";
+/* input */
+function addChar(c){
+  buffer += c;
+  render();
 }
 
-/* keyboard */
-function buildRow(id, keys) {
+/* space */
+function addSpace(){
+  buffer += " ";
+  render();
+}
+
+/* delete */
+function backspace(){
+  buffer = buffer.trimEnd().slice(0,-1);
+  render();
+}
+
+/* clear */
+function clearText(){
+  buffer = "";
+  render();
+}
+
+/* copy */
+function copyText(){
+  navigator.clipboard.writeText(buffer);
+}
+
+/* KO button */
+function addKO(){
+  buffer += special.KO;
+  render();
+}
+
+/* χ button */
+function addCHI(){
+  buffer += special.CHI;
+  render();
+}
+
+/* build keyboard */
+function buildRow(id, keys){
   const container = document.getElementById(id);
 
-  keys.forEach(k => {
+  keys.forEach(k=>{
     const btn = document.createElement("button");
 
     btn.innerHTML = `
@@ -96,13 +82,60 @@ function buildRow(id, keys) {
       <div class="bottom">${letters[k]}</div>
     `;
 
-    btn.onclick = () => addChar(letters[k], k);
+    let pressTimer;
+
+    btn.addEventListener("touchstart", ()=>{
+      pressTimer = setTimeout(()=>{
+        showToneMenu(letters[k]);
+      }, 400);
+    });
+
+    btn.addEventListener("touchend", ()=>{
+      clearTimeout(pressTimer);
+    });
+
+    btn.onclick = ()=> addChar(letters[k]);
 
     container.appendChild(btn);
   });
 }
 
-/* layout */
-buildRow("row1", ["A","B","C","D","E","F","G","H","I","J"]);
-buildRow("row2", ["K","L","M","N","O","P","Q","R"]);
-buildRow("row3", ["S","T","U","V","W","X","Y","Z"]);
+/* tone menu */
+function showToneMenu(base){
+  const menu = document.createElement("div");
+  menu.id = "toneMenu";
+
+  tones.forEach(t=>{
+    const b = document.createElement("button");
+    b.innerText = base + t;
+
+    b.onclick = ()=>{
+      buffer += base + t;
+      render();
+      menu.remove();
+    };
+
+    menu.appendChild(b);
+  });
+
+  document.body.appendChild(menu);
+}
+
+/* init */
+buildRow("row1", row1);
+buildRow("row2", row2);
+buildRow("row3", row3);
+
+/* add special buttons */
+const actions = document.querySelector(".actions");
+
+const koBtn = document.createElement("button");
+koBtn.innerText = "KO (टो)";
+koBtn.onclick = addKO;
+
+const chiBtn = document.createElement("button");
+chiBtn.innerText = "χ (ो)";
+chiBtn.onclick = addCHI;
+
+actions.appendChild(koBtn);
+actions.appendChild(chiBtn);
