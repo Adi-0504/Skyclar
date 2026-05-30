@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sky Island Keyboard</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,16 +16,16 @@
     <!-- OUTPUT -->
     <div class="output" id="output"></div>
 
-    <!-- LETTER GRID (ABC STYLE) -->
-    <div class="keyboard" id="letters"></div>
+    <!-- KEYBOARD -->
+    <div class="keyboard">
 
-    <!-- WORD BAR -->
-    <div class="wordbar" id="words"></div>
+      <div class="row" id="row1"></div>
+      <div class="row" id="row2"></div>
+      <div class="row" id="row3"></div>
 
-    <!-- TONE BAR -->
-    <div class="tonebar" id="tones"></div>
+    </div>
 
-    <!-- ACTION BAR -->
+    <!-- ACTIONS -->
     <div class="actions">
       <button onclick="clearText()">Clear</button>
       <button onclick="backspace()">Delete</button>
@@ -31,6 +33,8 @@
 
   </div>
 
+  <!-- JS -->
   <script src="script.js"></script>
+
 </body>
 </html>
