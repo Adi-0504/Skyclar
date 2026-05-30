@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sky Island Keyboard V3</title>
-
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#e5e5ea">
-  <link rel="icon" href="icon.svg">
-  <link rel="apple-touch-icon" href="icon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Island Keyboard V7</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- OUTPUT -->
   <div class="output" id="output"></div>
 
-  <!-- PREDICT BAR（滑動候選詞） -->
   <div class="predict" id="predict"></div>
 
-  <!-- ACTIONS -->
   <div class="actions">
-    <button onclick="copyText()">Copy</button>
-    <button onclick="clearText()">Clear</button>
+    <button onclick="addSpace()">Space</button>
     <button onclick="backspace()">Delete</button>
+    <button onclick="clearText()">Clear</button>
+    <button onclick="copyText()">Copy</button>
   </div>
 
-  <!-- KEYBOARD -->
   <div class="keyboard">
     <div class="row" id="row1"></div>
     <div class="row" id="row2"></div>
@@ -39,6 +31,5 @@
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
