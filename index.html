@@ -2,39 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sky Island Keyboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="app">
 
     <!-- OUTPUT -->
     <div class="output" id="output"></div>
 
-    <!-- LETTERS -->
-    <div class="section">
-      <h3>Letters</h3>
-      <div class="grid" id="letters"></div>
-    </div>
+    <!-- LETTER GRID (ABC STYLE) -->
+    <div class="keyboard" id="letters"></div>
 
-    <!-- WORDS -->
-    <div class="section">
-      <h3>Words</h3>
-      <div class="row" id="words"></div>
-    </div>
+    <!-- WORD BAR -->
+    <div class="wordbar" id="words"></div>
 
-    <!-- TONES -->
-    <div class="section">
-      <h3>Tones</h3>
-      <div class="row" id="tones"></div>
-    </div>
+    <!-- TONE BAR -->
+    <div class="tonebar" id="tones"></div>
 
-    <!-- ACTIONS -->
+    <!-- ACTION BAR -->
     <div class="actions">
-      <button onclick="clearText()">⌫ Clear</button>
-      <button onclick="backspace()">← Delete</button>
+      <button onclick="clearText()">Clear</button>
+      <button onclick="backspace()">Delete</button>
     </div>
 
   </div>
