@@ -1,6 +1,6 @@
 const output = document.getElementById("output");
 
-/* 空語字母 */
+/* 空語字母表 */
 const letters = {
   A: "σ", B: "ৎ", C: "১", D: "ঢ", E: "ε",
   F: "न", G: "३", H: "μ", I: "ι", J: "৮",
@@ -10,13 +10,28 @@ const letters = {
   Z: "χ"
 };
 
-/* 你的新 ABC 排列 */
+/* ABC 排列（你要的版本） */
 const row1 = ["A","B","C","D","E","F","G","H","I","J"];
 const row2 = ["K","L","M","N","O","P","Q","R"];
-const row3 = ["U","V","W","X","Y","Z"];
+const row3 = ["S","T","U","V","W","X","Y","Z"];
 
-function buildRow(id, keys) {
-  const container = document.getElementById(id);
+/* 安全取得 container */
+function safeGet(id) {
+  const el = document.getElementById(id);
+  if (!el) {
+    console.warn("Missing element:", id);
+  }
+  return el;
+}
+
+const outputBox = safeGet("output");
+const row1Box = safeGet("row1");
+const row2Box = safeGet("row2");
+const row3Box = safeGet("row3");
+
+/* 建立鍵盤 */
+function buildRow(container, keys) {
+  if (!container) return;
 
   keys.forEach(k => {
     const btn = document.createElement("button");
@@ -27,13 +42,33 @@ function buildRow(id, keys) {
     `;
 
     btn.onclick = () => {
-      output.innerText += letters[k] + " ";
+      if (outputBox) {
+        outputBox.innerText += letters[k] + " ";
+      }
     };
 
     container.appendChild(btn);
   });
 }
 
-buildRow("row1", row1);
-buildRow("row2", row2);
-buildRow("row3", row3);
+/* 渲染三排 */
+buildRow(row1Box, row1);
+buildRow(row2Box, row2);
+buildRow(row3Box, row3);
+
+/* ===== 功能鍵 ===== */
+
+function clearText() {
+  if (outputBox) outputBox.innerText = "";
+}
+
+function backspace() {
+  if (!outputBox) return;
+
+  let text = outputBox.innerText.trim();
+  let arr = text.split(" ");
+
+  arr.pop();
+
+  outputBox.innerText = arr.length ? arr.join(" ") + " " : "";
+}
