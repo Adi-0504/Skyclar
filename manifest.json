@@ -1,0 +1,15 @@
+{
+  "name": "Sky Island Keyboard",
+  "short_name": "Sky Keyboard",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#e5e5ea",
+  "theme_color": "#e5e5ea",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
