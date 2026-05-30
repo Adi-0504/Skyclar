@@ -2,115 +2,80 @@ const outputBox = document.getElementById("output");
 
 let buffer = "";
 
-/* 空語字母 */
+/* ===== 字典（顯示 + 複製分離）===== */
 const letters = {
-  A:"σ",B:"ৎ",C:"১",D:"ঢ",E:"ε",F:"न",G:"३",
-  H:"μ",I:"ι",J:"৮",K:"ও",L:"হ",M:"η",
-  N:"प",O:"ड",P:"व",Q:"ς",R:"τ",S:"ग",
-  T:"λ",U:"δ",V:"ζ",W:"ι",X:"ξ",Y:"ψ",Z:"χ"
+  A: { base:"σ", tones:["σ̇","σ̲","σ'"] },
+  B: { base:"ৎ", tones:["ৎ̇","ৎ̲","ৎ'"] },
+  C: { base:"১", tones:["১̇","১̲","১'"] },
+  D: { base:"ঢ", tones:["ঢ̇","ঢ̲","ঢ'"] },
+  E: { base:"ε", tones:["ε̇","ε̲","ε'"] },
+  F: { base:"न", tones:["न̇","न̲","न'"] },
+  G: { base:"३", tones:["३̇","३̲","३'"] },
+
+  H: { base:"μ", tones:["μ̇","μ̲","μ'"] },
+  I: { base:"ι", tones:["ι̇","ι̲","ι'"] },
+  J: { base:"৮", tones:["৮̇","৮̲","৮'"] },
+  K: { base:"ও", tones:["ও̇","ও̲","ও'"] },
+  L: { base:"হ", tones:["হ̇","হ̲","হ'"] },
+  M: { base:"৩", tones:["৩̇","৩̲","৩'"] },
+
+  N: { base:"η", tones:["η̇","η̲","η'"] },
+  O: { base:"प", tones:["प̇","प̲","प'"] },
+  P: { base:"ड", tones:["ड̇","ड̲","ड'"] },
+  Q: { base:"व", tones:["व̇","व̲","व'"] },
+  R: { base:"ς", tones:["ς̇","ς̲","ς'"] },
+  S: { base:"ग", tones:["ग̇","ग̲","ग'"] },
+
+  T: { base:"τ", tones:["τ̇","τ̲","τ'"] },
+  U: { base:"ढ", tones:["ढ̇","ढ̲","ढ'"] },
+  V: { base:"न", tones:["न̇","न̲","न'"] },
+  W: { base:"λ", tones:["λ̇","λ̲","λ'"] },
+  X: { base:"δ", tones:["δ̇","δ̲","δ'"] },
+  Y: { base:"য", tones:["য̇","য̲","য'"] },
+  Z: { base:"ζ", tones:["ζ̇","ζ̲","ζ'"] }
 };
 
-/* KO & χ */
-const special = {
-  KO: "टो",
-  CHI: "ो"
-};
-
-/* tone marks */
-const tones = ["", "̇", "̲", "'"];
-
-/* keyboard */
-const row1 = ["A","B","C","D","E","F","G","H","I","J"];
-const row2 = ["K","L","M","N","O","P","Q","R"];
-const row3 = ["S","T","U","V","W","X","Y","Z"];
-
-/* render */
-function render() {
+/* ===== render ===== */
+function render(){
   outputBox.innerText = buffer;
 }
 
-/* input */
+/* ===== input ===== */
 function addChar(c){
   buffer += c;
   render();
 }
 
-/* space */
 function addSpace(){
   buffer += " ";
   render();
 }
 
-/* delete */
 function backspace(){
   buffer = buffer.trimEnd().slice(0,-1);
   render();
 }
 
-/* clear */
 function clearText(){
   buffer = "";
   render();
 }
 
-/* copy */
 function copyText(){
   navigator.clipboard.writeText(buffer);
 }
 
-/* KO button */
-function addKO(){
-  buffer += special.KO;
-  render();
-}
-
-/* χ button */
-function addCHI(){
-  buffer += special.CHI;
-  render();
-}
-
-/* build keyboard */
-function buildRow(id, keys){
-  const container = document.getElementById(id);
-
-  keys.forEach(k=>{
-    const btn = document.createElement("button");
-
-    btn.innerHTML = `
-      <div class="top">${k}</div>
-      <div class="bottom">${letters[k]}</div>
-    `;
-
-    let pressTimer;
-
-    btn.addEventListener("touchstart", ()=>{
-      pressTimer = setTimeout(()=>{
-        showToneMenu(letters[k]);
-      }, 400);
-    });
-
-    btn.addEventListener("touchend", ()=>{
-      clearTimeout(pressTimer);
-    });
-
-    btn.onclick = ()=> addChar(letters[k]);
-
-    container.appendChild(btn);
-  });
-}
-
-/* tone menu */
-function showToneMenu(base){
+/* ===== tone menu ===== */
+function showToneMenu(tones){
   const menu = document.createElement("div");
   menu.id = "toneMenu";
 
   tones.forEach(t=>{
     const b = document.createElement("button");
-    b.innerText = base + t;
+    b.innerText = t;
 
     b.onclick = ()=>{
-      buffer += base + t;
+      buffer += t;
       render();
       menu.remove();
     };
@@ -121,21 +86,47 @@ function showToneMenu(base){
   document.body.appendChild(menu);
 }
 
-/* init */
-buildRow("row1", row1);
-buildRow("row2", row2);
-buildRow("row3", row3);
+/* ===== keyboard builder ===== */
+function buildRow(id, keys){
+  const container = document.getElementById(id);
 
-/* add special buttons */
-const actions = document.querySelector(".actions");
+  keys.forEach(k=>{
+    const data = letters[k];
 
-const koBtn = document.createElement("button");
-koBtn.innerText = "KO (टो)";
-koBtn.onclick = addKO;
+    const wrapper = document.createElement("div");
+    wrapper.className = "key";
 
-const chiBtn = document.createElement("button");
-chiBtn.innerText = "χ (ो)";
-chiBtn.onclick = addCHI;
+    const base = document.createElement("div");
+    base.className = "base";
+    base.innerText = data.base;
 
-actions.appendChild(koBtn);
-actions.appendChild(chiBtn);
+    const underline = document.createElement("div");
+    underline.className = "underline";
+    underline.innerText = "ˍ"; // CSS視覺線
+
+    wrapper.appendChild(base);
+    wrapper.appendChild(underline);
+
+    /* tap */
+    wrapper.onclick = ()=> addChar(data.base);
+
+    /* long press */
+    let timer;
+    wrapper.addEventListener("touchstart", ()=>{
+      timer = setTimeout(()=>{
+        showToneMenu(data.tones);
+      }, 350);
+    });
+
+    wrapper.addEventListener("touchend", ()=>{
+      clearTimeout(timer);
+    });
+
+    container.appendChild(wrapper);
+  });
+}
+
+/* ===== init ===== */
+buildRow("row1", ["A","B","C","D","E","F","G","H","I","J"]);
+buildRow("row2", ["K","L","M","N","O","P","Q","R"]);
+buildRow("row3", ["S","T","U","V","W","X","Y","Z"]);
