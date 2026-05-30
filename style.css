@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  font-family: -apple-system;
+  background: #e5e5ea;
+}
+
+.app {
+  padding: 10px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* OUTPUT */
+.output {
+  background: white;
+  min-height: 160px;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* PREDICT BAR */
+.predict {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.predict button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: #fff;
+  font-size: 14px;
+}
+
+/* keyboard */
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.row:nth-child(2) { margin-left: 25px; }
+.row:nth-child(3) { margin-left: 50px; }
+
+button {
+  flex: 1;
+  padding: 16px 0;
+  border-radius: 12px;
+  border: none;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.top {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.bottom {
+  font-size: 22px;
+}
+
+/* actions */
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.actions button {
+  flex: 1;
+  font-weight: bold;
+}
