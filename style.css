@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: -apple-system;
   background: #e5e5ea;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app {
@@ -10,24 +11,35 @@ body {
   margin: auto;
 }
 
+/* ===== output ===== */
 .output {
   background: white;
-  min-height: 180px;
-  border-radius: 16px;
+  min-height: 220px;
+  border-radius: 18px;
   padding: 18px;
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 30px;
+  margin-bottom: 12px;
+  word-wrap: break-word;
 }
 
-/* actions */
+/* ===== actions ===== */
 .actions {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-/* keyboard */
+.actions button {
+  padding: 14px 0;
+  border-radius: 12px;
+  border: none;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  font-size: 14px;
+}
+
+/* ===== keyboard ===== */
 .keyboard {
   display: flex;
   flex-direction: column;
@@ -39,33 +51,74 @@ body {
   gap: 8px;
 }
 
-.row:nth-child(2){ margin-left:25px; }
-.row:nth-child(3){ margin-left:50px; }
+.row:nth-child(2) { margin-left: 25px; }
+.row:nth-child(3) { margin-left: 50px; }
 
-button {
-  flex: 1;
-  padding: 16px 0;
-  border-radius: 12px;
-  border: none;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-}
-
-/* ===== CSS 疊字核心 ===== */
+/* ===== KEY（最重要🔥）===== */
 .key {
-  position: relative;
+  flex: 1;
+  min-height: 62px;
+
+  background: white;
+  border-radius: 14px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  /* iOS感陰影 */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+
+  /* 手機體驗 */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
+/* 按下效果（像 iOS 鍵盤） */
+.key:active {
+  transform: scale(0.96);
+  background: #f2f2f7;
+}
+
+/* ===== base letter ===== */
 .base {
-  font-size: 22px;
+  font-size: 24px;
+  line-height: 1;
 }
 
+/* ===== tone underline ===== */
 .underline {
   position: absolute;
-  bottom: 2px;
-  font-size: 22px;
+  bottom: 6px;
+  font-size: 20px;
+  opacity: 0.55;
   pointer-events: none;
+}
+
+/* ===== tone menu ===== */
+#toneMenu {
+  position: fixed;
+  left: 50%;
+  bottom: 120px;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 8px;
+
+  background: white;
+  padding: 10px;
+  border-radius: 14px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+#toneMenu button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #f2f2f7;
 }
