@@ -2,7 +2,6 @@ body {
   margin: 0;
   font-family: -apple-system;
   background: #e5e5ea;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .app {
@@ -14,12 +13,12 @@ body {
 /* ===== output ===== */
 .output {
   background: white;
-  min-height: 220px;
-  border-radius: 18px;
+  min-height: 200px;
+  border-radius: 16px;
   padding: 18px;
-  font-size: 30px;
+  font-size: 28px;
   margin-bottom: 12px;
-  word-wrap: break-word;
+  word-break: break-word;
 }
 
 /* ===== actions ===== */
@@ -36,7 +35,6 @@ body {
   border: none;
   background: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-  font-size: 14px;
 }
 
 /* ===== keyboard ===== */
@@ -54,13 +52,13 @@ body {
 .row:nth-child(2) { margin-left: 25px; }
 .row:nth-child(3) { margin-left: 50px; }
 
-/* ===== KEY（最重要🔥）===== */
+/* ===== KEY（超重要🔥）===== */
 .key {
   flex: 1;
   min-height: 62px;
 
   background: white;
-  border-radius: 14px;
+  border-radius: 12px;
 
   display: flex;
   flex-direction: column;
@@ -69,22 +67,19 @@ body {
 
   position: relative;
 
-  /* iOS感陰影 */
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 
-  /* 手機體驗 */
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
 
-/* 按下效果（像 iOS 鍵盤） */
 .key:active {
   transform: scale(0.96);
   background: #f2f2f7;
 }
 
-/* ===== base letter ===== */
+/* ===== letters ===== */
 .base {
   font-size: 24px;
   line-height: 1;
@@ -94,8 +89,8 @@ body {
 .underline {
   position: absolute;
   bottom: 6px;
-  font-size: 20px;
-  opacity: 0.55;
+  font-size: 18px;
+  opacity: 0.5;
   pointer-events: none;
 }
 
