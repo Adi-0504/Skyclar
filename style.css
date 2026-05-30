@@ -10,7 +10,7 @@ body {
   margin: auto;
 }
 
-/* ===== output ===== */
+/* ===== 輸出 ===== */
 .output {
   background: white;
   min-height: 200px;
@@ -49,10 +49,10 @@ body {
   gap: 8px;
 }
 
-.row:nth-child(2) { margin-left: 25px; }
-.row:nth-child(3) { margin-left: 50px; }
+.row:nth-child(2){ margin-left: 25px; }
+.row:nth-child(3){ margin-left: 50px; }
 
-/* ===== KEY（超重要🔥）===== */
+/* ===== KEY（核心）===== */
 .key {
   flex: 1;
   min-height: 62px;
@@ -79,18 +79,25 @@ body {
   background: #f2f2f7;
 }
 
-/* ===== letters ===== */
-.base {
-  font-size: 24px;
-  line-height: 1;
+/* ===== 英文小字 ===== */
+.top {
+  position: absolute;
+  top: 6px;
+  font-size: 12px;
+  opacity: 0.55;
 }
 
-/* ===== tone underline ===== */
+/* ===== 空語主字 ===== */
+.base {
+  font-size: 24px;
+}
+
+/* ===== underline ===== */
 .underline {
   position: absolute;
   bottom: 6px;
   font-size: 18px;
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
 }
 
