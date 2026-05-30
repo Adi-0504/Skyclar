@@ -2,7 +2,7 @@ const outputBox = document.getElementById("output");
 
 let buffer = "";
 
-/* ===== 字典 ===== */
+/* ===== 空語字典 ===== */
 const letters = {
   A: { base:"σ", tones:["σ̇","σ̲","σ'"] },
   B: { base:"ৎ", tones:["ৎ̇","ৎ̲","ৎ'"] },
@@ -52,7 +52,7 @@ function addSpace(){
 }
 
 function backspace(){
-  buffer = buffer.trimEnd().slice(0, -1);
+  buffer = buffer.trimEnd().slice(0,-1);
   render();
 }
 
@@ -90,9 +90,10 @@ function showToneMenu(tones){
   document.body.appendChild(menu);
 }
 
-/* ===== keyboard ===== */
+/* ===== keyboard builder ===== */
 function buildRow(id, keys){
   const container = document.getElementById(id);
+  container.innerHTML = "";
 
   keys.forEach(k=>{
     const data = letters[k];
@@ -100,21 +101,30 @@ function buildRow(id, keys){
     const key = document.createElement("div");
     key.className = "key";
 
+    /* 🔺 英文小字 */
+    const top = document.createElement("div");
+    top.className = "top";
+    top.innerText = k;
+
+    /* 🔻 空語大字 */
     const base = document.createElement("div");
     base.className = "base";
     base.innerText = data.base;
 
+    /* underline */
     const underline = document.createElement("div");
     underline.className = "underline";
     underline.innerText = "ˍ";
 
+    key.appendChild(top);
     key.appendChild(base);
     key.appendChild(underline);
 
-    key.onclick = ()=> addChar(data.base);
+    /* tap */
+    key.onclick = () => addChar(data.base);
 
+    /* long press */
     let timer;
-
     key.addEventListener("touchstart", ()=>{
       timer = setTimeout(()=>{
         showToneMenu(data.tones);
