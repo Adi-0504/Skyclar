@@ -1,7 +1,6 @@
 const outputBox = document.getElementById("output");
 let buffer = "";
 
-/* ===== 字母表 ===== */
 const letters = {
   A:{base:"σ",tones:["σ̇","σ̲","σ'"]},
   B:{base:"ৎ",tones:["ৎ̇","ৎ̲","ৎ'"]},
@@ -40,29 +39,11 @@ function render(){
 }
 
 /* ===== input ===== */
-function addChar(c){
-  buffer += c;
-  render();
-}
-
-function addSpace(){
-  buffer += " ";
-  render();
-}
-
-function backspace(){
-  buffer = buffer.slice(0,-1);
-  render();
-}
-
-function clearText(){
-  buffer = "";
-  render();
-}
-
-function copyText(){
-  navigator.clipboard.writeText(buffer);
-}
+function addChar(c){ buffer += c; render(); }
+function addSpace(){ buffer += " "; render(); }
+function backspace(){ buffer = buffer.slice(0,-1); render(); }
+function clearText(){ buffer = ""; render(); }
+function copyText(){ navigator.clipboard.writeText(buffer); }
 
 /* ===== tone menu ===== */
 function showToneMenu(tones){
@@ -89,12 +70,9 @@ function showToneMenu(tones){
   document.body.appendChild(menu);
 }
 
-/* ===== keyboard builder ===== */
+/* ===== keyboard ===== */
 function buildRow(id, keys){
   const container = document.getElementById(id);
-
-  if (!container) return; // ⭐防炸
-
   container.innerHTML = "";
 
   keys.forEach(k=>{
@@ -126,56 +104,14 @@ function buildRow(id, keys){
       timer = setTimeout(()=> showToneMenu(data.tones), 350);
     });
 
-    key.addEventListener("touchend", ()=> clearTimeout(timer));
+    key.addEventListener("touchend", ()=>{
+      clearTimeout(timer);
+    });
 
     container.appendChild(key);
   });
 }
 
-/* ===== KO special key（安全版）===== */
-function buildSpecial(){
-  const row4 = document.getElementById("row4");
-  if (!row4) return; // ⭐最重要：不讓它炸
-
-  const ko = document.createElement("div");
-  ko.className = "key";
-
-  const top = document.createElement("div");
-  top.className = "top";
-  top.innerText = "KO";
-
-  const base = document.createElement("div");
-  base.className = "base";
-  base.innerText = "ट";
-
-  ko.appendChild(top);
-  ko.appendChild(base);
-
-  ko.onclick = ()=> addChar("ट");
-
-  row4.appendChild(ko);
-
-  const o = document.createElement("div");
-  o.className = "key";
-
-  const top2 = document.createElement("div");
-  top2.className = "top";
-  top2.innerText = "O";
-
-  const base2 = document.createElement("div");
-  base2.className = "base";
-  base2.innerText = "ो";
-
-  o.appendChild(top2);
-  o.appendChild(base2);
-
-  o.onclick = ()=> addChar("ो");
-
-  row4.appendChild(o);
-}
-
-/* ===== init ===== */
 buildRow("row1", ["A","B","C","D","E","F","G","H","I","J"]);
 buildRow("row2", ["K","L","M","N","O","P","Q","R"]);
 buildRow("row3", ["S","T","U","V","W","X","Y","Z"]);
-buildSpecial();
